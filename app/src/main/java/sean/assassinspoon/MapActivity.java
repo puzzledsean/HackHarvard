@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -16,13 +17,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapActivity extends FragmentActivity implements LocationProvider.LocationCallback,
         OnMapReadyCallback {
     public static final String TAG = MapActivity.class.getSimpleName(); // debug Tag
+    private int count = 0;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider;
 
     private Marker userMarker, targetMarker;
     private LatLng userPos, targetPos, assassinPos;
-    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,11 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         }
     }
 
+    // helper function to set marker color
+    private void setMarkerColor(Marker marker, float color) {
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(color));
+    }
+
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
@@ -89,24 +95,26 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
      */
     private void setUpMap() {
         // Add a marker in current position, and move the camera.
-        /*
-        Location userLoc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        double userLat = userLoc.getLatitude();
-        double userLng = userLoc.getLongitude();
-        */
 
         double userLat = 0, userLng = 0;
         LatLng userPos = new LatLng(userLat, userLng);
 
-        // Place a static target 10 m above and to the right of user
+        mMap.setPadding(10, 10, 10, 10);
+
+        // Place a static target near user
         targetPos = new LatLng(42.350292, -71.098425);
         assassinPos = new LatLng(42.350292, -71.098425);
 
-        userMarker = mMap.addMarker(new MarkerOptions().position(userPos).title("User in Harvard"));
-        targetMarker = mMap.addMarker(new MarkerOptions().position(targetPos).title("Target in Harvard"));
-        targetMarker.setVisible(false);
+        // Initialize the user and target player spots on the map
+        userMarker = mMap.addMarker(new MarkerOptions().position(userPos).title("User"));
+        setMarkerColor(userMarker, BitmapDescriptorFactory.HUE_RED);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
+        targetMarker = mMap.addMarker(new MarkerOptions().position(targetPos).title("Target"));
+        setMarkerColor(targetMarker, BitmapDescriptorFactory.HUE_BLUE);
+
+        targetMarker.setVisible(false); // target is invisible at the beginning of the game
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
     }
 
     @Override
@@ -114,16 +122,14 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         userPos = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
         //LatLng userPos = new LatLng(0, 0); // If you want to test a static user location
 
-
         userMarker.setPosition(userPos); // Set new user location
-
+        if(count == 0) {
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
+        }
         Log.i(TAG, "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
-        userMarker.setTitle(count++ + "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
-
-        // move camera to new user position
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(20));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(userPos));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
+        userMarker.setTitle(count + "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
+        ++count;
 
         update(targetPos, assassinPos, userPos);
     }
@@ -132,7 +138,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private static double toMeters(double miles) {
         return miles * 1609.34;
     }
-    // helper function to calculate distance between two points in meters
+
+    // helper function to calculate distance between two latlng points into meters
     private static double distFrom(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 3958.75; // miles (or 6371.0 kilometers)
         double dLat = Math.toRadians(lat2-lat1);
@@ -159,7 +166,6 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         double distanceT = distFrom(latU, lngU, latT, lngT);
         double distanceA = distFrom(latU, lngU, latA, lngA);
 
-        // userMarker.setPosition(userPos.latitude, userPos.longitude);
         if (distanceT <= 150) {
             targetMarker.setVisible(true);
             Log.i(TAG, "latU: " + latU + "lngU: " + lngU);
@@ -180,15 +186,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         Log.i(TAG, "Your assassin is nearby!");
     }
 
-    public double getDistance(LatLng pos1, LatLng pos2) {
-        double latDistance = pos2.latitude - pos1.latitude;
-        double lonDistance = pos2.longitude - pos2.longitude;
-
-        return Math.sqrt(latDistance * latDistance + lonDistance * lonDistance);
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        // default generated stub
     }
 }

@@ -12,6 +12,9 @@ import android.widget.EditText;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
+import java.text.ParseException;
 
 import org.json.JSONArray;
 
@@ -21,8 +24,8 @@ import org.json.JSONArray;
 public class CreateGameActivity extends AppCompatActivity {
 
     EditText nameOfGameTextBox;
-    EditText mapBoundariesTextBox;
     EditText numOfPlayersTextBox;
+    private String objectId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,6 @@ public class CreateGameActivity extends AppCompatActivity {
 
         Button createGame = (Button) findViewById(R.id.createGameButton);
         nameOfGameTextBox = (EditText) findViewById(R.id.nameOfGame);
-        mapBoundariesTextBox = (EditText) findViewById(R.id.mapBoundaries);
         numOfPlayersTextBox = (EditText) findViewById(R.id.numOfPlayers);
 
         createGame.setOnClickListener(
@@ -39,26 +41,25 @@ public class CreateGameActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String name = nameOfGameTextBox.getText().toString();
-                    String mapBoundaries = mapBoundariesTextBox.getText().toString();
                     String numOfPlayers = numOfPlayersTextBox.getText().toString();
                     Log.v("Name of game", name);
-                    Log.v("Map boundaries", mapBoundaries);
                     Log.v("Number of players", numOfPlayers);
-                    createGame(name, mapBoundaries, numOfPlayers);
+                    createGame(name, numOfPlayers);
                     Intent intent = new Intent(view.getContext(), CreateMapBoundaries.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("numOfPlayers", numOfPlayers);
                     startActivity(intent);
                 }
             }
         );
     }
 
-    private void createGame(final String name, final String mapBoundaries, String numOfPlayers){
-        ParseObject newGame = new ParseObject("Game");
+    private void createGame(String name, String numOfPlayers){
+        final ParseObject newGame = new ParseObject("Game");
         JSONArray emptyArray = new JSONArray();
 
         newGame.put("name", name);
 
-        // newGame.put("mapBoundaries", mapBoundaries);
         int num = 0;
         try{
             num = Integer.parseInt(numOfPlayers);
@@ -67,6 +68,7 @@ public class CreateGameActivity extends AppCompatActivity {
         }
         newGame.put("numOfPlayers", num);
         newGame.put("listOfPlayers", emptyArray);
+
         newGame.saveInBackground();
     }
 }
