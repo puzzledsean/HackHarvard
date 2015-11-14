@@ -1,15 +1,10 @@
 package sean.assassinspoon;
 
 import android.location.Location;
-import android.location.LocationListener;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,12 +18,11 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     public static final String TAG = MapActivity.class.getSimpleName(); // debug Tag
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private GoogleApiClient mGoogleApiClient;
     private LocationProvider mLocationProvider;
 
     private Marker userMarker, targetMarker;
     private LatLng userPos, targetPos, assassinPos;
-
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +41,6 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         mLocationProvider = new LocationProvider(this, this);
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-
-    }
-
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        setUpMapIfNeeded();
-    }
-    */
     @Override
     protected void onResume() {
         super.onResume();
@@ -121,7 +102,6 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         targetPos = new LatLng(42.350292, -71.098425);
         assassinPos = new LatLng(42.350292, -71.098425);
 
-
         userMarker = mMap.addMarker(new MarkerOptions().position(userPos).title("User in Harvard"));
         targetMarker = mMap.addMarker(new MarkerOptions().position(targetPos).title("Target in Harvard"));
         targetMarker.setVisible(false);
@@ -134,11 +114,17 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         userPos = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
         //LatLng userPos = new LatLng(0, 0); // If you want to test a static user location
 
-        userMarker.setPosition(userPos);
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(20));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
+
+        userMarker.setPosition(userPos); // Set new user location
+
+        Log.i(TAG, "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
+        userMarker.setTitle(count++ + "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
 
         // move camera to new user position
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(20));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(userPos));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
+
         update(targetPos, assassinPos, userPos);
     }
 
@@ -199,5 +185,10 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         double lonDistance = pos2.longitude - pos2.longitude;
 
         return Math.sqrt(latDistance * latDistance + lonDistance * lonDistance);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }

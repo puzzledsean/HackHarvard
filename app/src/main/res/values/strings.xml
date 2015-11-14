@@ -5,6 +5,9 @@
     <string name="welcome">Welcome to AssassinSpoons!</string>
     <string name="welcomeSub">To get started, connect with your Microsoft Band.</string>
     <string name="start">Start</string>
+    <string name="instructions">
+        To assassinate someone:\nWhack them with a spoon.\n\nAs the Assassin:\n1.) Get assigned a target.\n2.) Using the map, try to track your target and assassinate them.\n3.) The target will show up on the map when they are within 50 meters.\n\nAs the Target:\n1.) Keep in mind that you are also being targeted by someone else, so be careful.\n2.) The Microsoft Band will notify you when your assassin is 50m of you.\n\nLast person standing wins!
+    </string>
 
     <string name="title_activity_map">Map</string>
 </resources>
