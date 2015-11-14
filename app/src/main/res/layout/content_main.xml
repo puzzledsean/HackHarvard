@@ -65,10 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:backgroundTint="#ff913d"
-        android:layout_below="@+id/txtStatus"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="46dp" />
+        android:layout_above="@+id/txtStatus"
+        android:layout_alignLeft="@+id/connectBtn"
+        android:layout_alignStart="@+id/connectBtn" />
 
 </RelativeLayout>
 
