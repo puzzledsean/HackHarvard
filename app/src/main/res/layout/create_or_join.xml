@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2a43ff">
+    android:background="#0078d7">
 
     <android.support.design.widget.FloatingActionButton
     android:id="@+id/joinBtn"
