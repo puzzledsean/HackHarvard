@@ -21,7 +21,7 @@ public class CreateOrJoinActivity extends AppCompatActivity {
 
 
         FloatingActionButton join = (FloatingActionButton) findViewById(R.id.joinBtn);
-        join.setImageDrawable(getDrawable(R.drawable.common_signin_btn_icon_focus_light));
+        join.setImageDrawable(getDrawable(R.drawable.ic_directions_walk_white_24dp));
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,10 +44,23 @@ public class CreateOrJoinActivity extends AppCompatActivity {
 
 
         FloatingActionButton create = (FloatingActionButton) findViewById(R.id.createBtn);
+        create.setImageDrawable(getDrawable(R.drawable.ic_group_add_white_24dp));
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), CreateGameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton info = (FloatingActionButton) findViewById(R.id.infoBtn);
+        info.setImageDrawable(getDrawable(R.drawable.ic_info_outline_white_24dp));
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), InfoActivity.class);
                 startActivity(intent);
             }
         });
