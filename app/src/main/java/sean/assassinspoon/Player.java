@@ -1,6 +1,7 @@
 package sean.assassinspoon;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by Andy Shen on 11/14/2015.
@@ -38,8 +39,25 @@ public class Player {
     public String getTargetName(){
         return targetName;
     }
-    public File getPlayerPicture(){
-        return playerPicture;
+    public File getPlayerPicture(){return playerPicture;}
+
+    public int setTargets(int playerList[]){
+        int flagForTarget[playerList.length];
+        for (int i = 0; i<playerList.length; i++){
+            flagForTarget[i] = 0;
+        }
+        for (int j = 0; j<playerList.length; j++){
+            if (flagForTarget[j]==0){
+
+
+
+
+            }
+
+
+        }
+
+
     }
 
 

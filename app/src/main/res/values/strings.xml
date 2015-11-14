@@ -13,4 +13,5 @@
     <string name="start">Start</string>
 
     <string name="consent">Heart Rate Consent</string>
+    <string name="title_activity_map">Map</string>
 </resources>
