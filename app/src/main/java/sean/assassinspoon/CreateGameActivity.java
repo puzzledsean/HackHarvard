@@ -13,6 +13,8 @@ import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+
 /**
  * Created by huyle on 11/14/2015.
  */
@@ -52,7 +54,10 @@ public class CreateGameActivity extends AppCompatActivity {
 
     private void createGame(final String name, final String mapBoundaries, String numOfPlayers){
         ParseObject newGame = new ParseObject("Game");
+        JSONArray emptyArray = new JSONArray();
+
         newGame.put("name", name);
+
         // newGame.put("mapBoundaries", mapBoundaries);
         int num = 0;
         try{
@@ -61,6 +66,7 @@ public class CreateGameActivity extends AppCompatActivity {
             Log.d("Error", "Could not parse: " + e);
         }
         newGame.put("numOfPlayers", num);
+        newGame.put("listOfPlayers", emptyArray);
         newGame.saveInBackground();
     }
 }

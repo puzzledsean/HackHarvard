@@ -75,7 +75,7 @@ public class joinGameActivity extends AppCompatActivity{
         //see if game of that gameName has already been created
         for(int i = 0; i < results.size(); i++) {
             gameNameCheck = results.get(i).get("name").toString();
-            Log.d("game name check", gameNameCheck);
+//            Log.d("game name check", gameNameCheck);
             if(gameNameCheck.equals(gameName)){ //found objectID based on game name
                 joinedGame = true;
                 ParseObject gameObject = results.get(i);
@@ -83,14 +83,16 @@ public class joinGameActivity extends AppCompatActivity{
                 Log.d("objectID", objectId);
 
                 // store the data to that object ID
+                // basically just add to list of players
                 gameObject.put("name", gameName);
+
                 JSONArray temp = gameObject.fetchIfNeeded().getJSONArray("listOfPlayers");
                 Log.d("temp", temp.toString());
                 Log.d("player name", name);
                 temp.put(name);
                 gameObject.put("listOfPlayers", temp);
                 Log.v("temp ", String.valueOf(temp));
-                gameObject.increment("numOfPlayers");
+//                gameObject.increment("numOfPlayers");
                 gameObject.saveInBackground();
 
 
