@@ -1,5 +1,6 @@
 package sean.assassinspoon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,6 +42,9 @@ public class joinGameActivity extends AppCompatActivity{
                 name = nameField.getText().toString();
                 checkNameField(game, name);
 
+                Intent intent = new Intent(joinGameActivity.this, MapActivity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -59,6 +63,7 @@ public class joinGameActivity extends AppCompatActivity{
                 temp.put(name);
                 game.put("listOfPlayers", temp);
                 Log.v("temp ", String.valueOf(temp));
+                game.increment("numOfPlayers");
                 game.saveInBackground();
 
             }
