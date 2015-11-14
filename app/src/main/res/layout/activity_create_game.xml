@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name of game"
+        android:hint="Name of game"
         android:ems="10"
         android:id="@+id/nameOfGame"
         android:layout_marginTop="73dp"
@@ -20,9 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="4 Map Boundries"
+        android:hint="4 Map Boundaries"
         android:ems="10"
-        android:id="@+id/mapBoundries"
+        android:id="@+id/mapBoundaries"
         android:layout_below="@+id/nameOfGame"
         android:layout_centerHorizontal="true" />
 
@@ -32,9 +32,9 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/numOfPlayers"
-        android:layout_below="@+id/mapBoundries"
+        android:layout_below="@+id/mapBoundaries"
         android:layout_centerHorizontal="true"
-        android:text="Max number of players" />
+        android:hint="Max number of players" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
