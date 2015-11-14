@@ -41,6 +41,7 @@ public class Player {
     }
     public File getPlayerPicture(){return playerPicture;}
 
+/*
     public int setTargets(int playerList[]){
         int flagForTarget[playerList.length];
         for (int i = 0; i<playerList.length; i++){
@@ -54,11 +55,8 @@ public class Player {
 
             }
 
+*/
 
-        }
-
-
-    }
 
 
 
