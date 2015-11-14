@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2a43ff">
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/joinBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+        app:backgroundTint="#31da61"
+        android:layout_alignTop="@+id/createBtn"
+        android:layout_toLeftOf="@+id/mapBtn"
+        android:layout_toStartOf="@+id/mapBtn" />
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/mapBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="49dp" />
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/createBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+        app:backgroundTint="#458cff"
+        android:layout_marginBottom="161dp"
+        android:layout_above="@+id/mapBtn"
+        android:layout_toLeftOf="@+id/mapBtn"
+        android:layout_marginRight="111dp"
+        android:layout_marginEnd="111dp" />
+
+</RelativeLayout>

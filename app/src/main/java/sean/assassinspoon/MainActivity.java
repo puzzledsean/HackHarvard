@@ -3,13 +3,17 @@ package sean.assassinspoon;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -31,8 +35,8 @@ import java.lang.ref.WeakReference;
 public class MainActivity extends AppCompatActivity {
 
     private BandClient client = null;
-    private Button btnStart, btnConsent;
-    private TextView txtStatus;
+    private FloatingActionButton btnConsent, temp;
+    private TextView txtStatus,txtWelcome, txtSub;
 
     private BandHeartRateEventListener mHeartRateEventListener = new BandHeartRateEventListener() {
         @Override
@@ -50,53 +54,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        txtStatus = (TextView) findViewById(R.id.txtStatus);
-        btnStart = (Button) findViewById(R.id.start);
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*
-                txtStatus.setText("");
-                new HeartRateSubscriptionTask().execute();
-                */
-                Intent intent = new Intent(v.getContext(), CreateGameActivity.class);
-                startActivity(intent);
-            }
-        });
+        setFonts();
 
         final WeakReference<Activity> reference = new WeakReference<Activity>(this);
 
-        btnConsent = (Button) findViewById(R.id.btnConsent);
+        btnConsent = (FloatingActionButton) findViewById(R.id.connectBtn);
+        btnConsent.setImageDrawable(getDrawable(R.drawable.ic_watch_white_24dp));
+
         btnConsent.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("unchecked")
             @Override
             public void onClick(View v) {
                 new HeartRateConsentTask().execute(reference);
+                Log.d("Connected with Band", "Success");
             }
         });
 
-        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.joinBtn);
-        add.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
-        add.setOnClickListener(new View.OnClickListener() {
+        temp = (FloatingActionButton) findViewById(R.id.toNext);
+        temp.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
+        temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, joinGameActivity.class);
+                Intent intent = new Intent(MainActivity.this, CreateOrJoinActivity.class);
                 startActivity(intent);
-
             }
         });
 
-        FloatingActionButton map = (FloatingActionButton) findViewById(R.id.mapBtn);
-        map.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
+    }
 
-            }
-        });
+    private void setFonts() {
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
+        txtWelcome = (TextView) findViewById(R.id.welcomeText);
+        Typeface proxima = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Light.otf");
+        txtWelcome.setTypeface(proxima);
+        txtSub = (TextView) findViewById(R.id.welcomeSub);
+        txtSub.setTypeface(proxima);
     }
 
     @Override
