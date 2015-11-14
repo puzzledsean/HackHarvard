@@ -86,6 +86,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        FloatingActionButton map = (FloatingActionButton) findViewById(R.id.mapBtn);
+        map.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

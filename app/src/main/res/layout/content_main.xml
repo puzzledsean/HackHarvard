@@ -42,5 +42,15 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_below="@+id/txtStatus"
+        android:layout_toRightOf="@+id/joinBtn"
+        android:layout_toEndOf="@+id/joinBtn" />
+
+
 </RelativeLayout>
 
