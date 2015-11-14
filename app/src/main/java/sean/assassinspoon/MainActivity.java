@@ -19,6 +19,8 @@ import com.microsoft.band.UserConsent;
 import com.microsoft.band.sensors.BandHeartRateEvent;
 import com.microsoft.band.sensors.BandHeartRateEventListener;
 import com.microsoft.band.sensors.HeartRateConsentListener;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 import java.lang.ref.WeakReference;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         btnStart = (Button) findViewById(R.id.start);
