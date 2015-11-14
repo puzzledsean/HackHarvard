@@ -7,50 +7,68 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#2a43ff">
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
-        android:layout_marginTop="185dp"
-        android:layout_below="@+id/txtStatus"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/btnConsent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/consent"
-        android:layout_alignBottom="@+id/start"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/welcome"
+        android:typeface="sans"
+        android:id="@+id/welcomeText"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginTop="67dp"
+        android:textColor="#ffffff"
+        android:textStyle="normal"
+        android:textSize="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/welcomeSub"
+        android:typeface="sans"
+        android:id="@+id/welcomeSub"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textStyle="normal"
+        android:textSize="20dp"
+        android:layout_below="@+id/welcomeText"
+        android:padding="4dp" />
 
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/connectBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
     <TextView
         android:id="@+id/txtStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:gravity="center"
+        android:layout_marginTop="37dp"
+        android:paddingLeft="15dp"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/connectBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/joinBtn"
+        android:id="@+id/toNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/mapBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        app:backgroundTint="#ff913d"
         android:layout_below="@+id/txtStatus"
-        android:layout_toRightOf="@+id/joinBtn"
-        android:layout_toEndOf="@+id/joinBtn" />
-
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="46dp" />
 
 </RelativeLayout>
 
