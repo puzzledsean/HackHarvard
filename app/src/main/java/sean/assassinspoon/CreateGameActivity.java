@@ -1,6 +1,7 @@
 package sean.assassinspoon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ public class CreateGameActivity extends Activity {
 
         createGame.setOnClickListener(
             new View.OnClickListener() {
+                @Override
                 public void onClick(View view) {
                     String name = nameOfGameTextBox.getText().toString();
                     String mapBoundaries = mapBoundariesTextBox.getText().toString();
@@ -40,6 +42,8 @@ public class CreateGameActivity extends Activity {
                     Log.v("Map boundaries", mapBoundaries);
                     Log.v("Number of players", numOfPlayers);
                     createGame(name, mapBoundaries, numOfPlayers);
+                    Intent intent = new Intent(view.getContext(), CreateMapBoundaries.class);
+                    startActivity(intent);
                 }
             }
         );
