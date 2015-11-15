@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         btnConsent = (FloatingActionButton) findViewById(R.id.connectBtn);
         btnConsent.setImageDrawable(getDrawable(R.drawable.ic_watch_white_24dp));
 
+        temp = (FloatingActionButton) findViewById(R.id.toNext);
+        temp.setVisibility(View.GONE);
+
         btnConsent.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("unchecked")
             @Override
@@ -70,15 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        temp = (FloatingActionButton) findViewById(R.id.toNext);
-        temp.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateOrJoinActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -123,41 +118,41 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private class HeartRateSubscriptionTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                if (getConnectedBandClient()) {
-                    if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
-                        client.getSensorManager().registerHeartRateEventListener(mHeartRateEventListener);
-                    } else {
-                        appendToUI("You have not given this application consent to access heart rate data yet."
-                                + " Please press the Heart Rate Consent button.\n");
-                    }
-                } else {
-                    appendToUI("Band isn't connected. Please make sure bluetooth is on and the band is in range.\n");
-                }
-            } catch (BandException e) {
-                String exceptionMessage="";
-                switch (e.getErrorType()) {
-                    case UNSUPPORTED_SDK_VERSION_ERROR:
-                        exceptionMessage = "Microsoft Health BandService doesn't support your SDK Version. Please update to latest SDK.\n";
-                        break;
-                    case SERVICE_ERROR:
-                        exceptionMessage = "Microsoft Health BandService is not available. Please make sure Microsoft Health is installed and that you have the correct permissions.\n";
-                        break;
-                    default:
-                        exceptionMessage = "Unknown error occured: " + e.getMessage() + "\n";
-                        break;
-                }
-                appendToUI(exceptionMessage);
-
-            } catch (Exception e) {
-                appendToUI(e.getMessage());
-            }
-            return null;
-        }
-    }
+//    private class HeartRateSubscriptionTask extends AsyncTask<Void, Void, Void> {
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            try {
+//                if (getConnectedBandClient()) {
+//                    if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
+//                        client.getSensorManager().registerHeartRateEventListener(mHeartRateEventListener);
+//                    } else {
+//                        appendToUI("You have not given this application consent to access heart rate data yet."
+//                                + " Please press the Heart Rate Consent button.\n");
+//                    }
+//                } else {
+//                    appendToUI("Band isn't connected. Please make sure bluetooth is on and the band is in range.\n");
+//                }
+//            } catch (BandException e) {
+//                String exceptionMessage="";
+//                switch (e.getErrorType()) {
+//                    case UNSUPPORTED_SDK_VERSION_ERROR:
+//                        exceptionMessage = "Microsoft Health BandService doesn't support your SDK Version. Please update to latest SDK.\n";
+//                        break;
+//                    case SERVICE_ERROR:
+//                        exceptionMessage = "Microsoft Health BandService is not available. Please make sure Microsoft Health is installed and that you have the correct permissions.\n";
+//                        break;
+//                    default:
+//                        exceptionMessage = "Unknown error occured: " + e.getMessage() + "\n";
+//                        break;
+//                }
+//                appendToUI(exceptionMessage);
+//
+//            } catch (Exception e) {
+//                appendToUI(e.getMessage());
+//            }
+//            return null;
+//        }
+//    }
 
     private class HeartRateConsentTask extends AsyncTask<WeakReference<Activity>, Void, Void> {
         @Override
@@ -169,6 +164,15 @@ public class MainActivity extends AppCompatActivity {
                         client.getSensorManager().requestHeartRateConsent(params[0].get(), new HeartRateConsentListener() {
                             @Override
                             public void userAccepted(boolean consentGiven) {
+                                temp.setVisibility(View.VISIBLE);
+                                temp.setImageDrawable(getDrawable(R.drawable.ic_arrow_forward_white_24dp));
+                                temp.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(MainActivity.this, CreateOrJoinActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
                             }
                         });
                     }
