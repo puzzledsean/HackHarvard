@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#2c7da5"
+    tools:context=".TargetInfoPageActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your Target:"
+        android:id="@+id/yourTargetText"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
+        android:textSize="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:typeface="normal" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/targetImage"
+        android:layout_gravity="center_horizontal"
+        android:maxHeight="250dp"
+        android:maxWidth="250dp"
+        android:minHeight="250dp"
+        android:minWidth="250dp"
+        android:layout_below="@+id/yourTargetText"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ASSASSINATED"
+        android:id="@+id/killCheck"
+        android:layout_below="@+id/targetImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:clickable="true"
+        android:maxHeight="100dp"
+        android:minHeight="100dp"
+        android:maxWidth="240dp"
+        android:minWidth="240dp"
+        android:textSize="24dp"
+        android:background="#e63a3a"
+        android:backgroundTint="#7f0000"
+        android:textColor="#fdfdfd"
+        android:textStyle="bold" />
+
+</RelativeLayout>
