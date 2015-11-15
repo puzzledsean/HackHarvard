@@ -26,6 +26,7 @@ import com.microsoft.band.BandIOException;
 import com.microsoft.band.BandInfo;
 import com.microsoft.band.ConnectionState;
 import com.microsoft.band.notifications.MessageFlags;
+import com.microsoft.band.notifications.VibrationType;
 import com.microsoft.band.tiles.BandTile;
 
 import java.util.Date;
@@ -205,7 +206,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
 
         long thirtySeconds = System.currentTimeMillis();
 
-        if (distanceT <= 350) {
+        if (distanceT <= 350 && (thirtySeconds - currentTime > 60000)) {
+            targetAlerted();
             targetMarker.setVisible(true);
             Log.i(TAG, "latU: " + latU + "lngU: " + lngU);
             Log.i(TAG, "Within Range: " + distanceT);
@@ -223,6 +225,12 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             Log.i(TAG, "Assassin outside of range: " + distanceA);
 
         }
+    }
+
+    private void targetAlerted() {
+        txtStatus.setText("");
+        new appTask("Target", "Target is alerted!").execute();
+        Log.i(TAG, "Target is alerted!");
     }
 
     private void notifyUserOfDanger() {
@@ -256,7 +264,13 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             try {
                 if (getConnectedBandClient()) {
                     if (doesTileExist(client.getTileManager().getTiles().await(), tileId)) {
-                        sendMessage(title, message);
+                        if(message.equals("Your assassin is near!")) {
+                            sendMessage(title, message);
+                            sendAlarmVibration();
+                        }else{
+                            sendMessage(title, message);
+                            sendNoticeVibration();
+                        }
                     } else {
                         if (addTile()) {
                             sendMessage("hint", "Send message to new message tile");
@@ -334,6 +348,28 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private void sendMessage(String title, String message) throws BandIOException {
         client.getNotificationManager().sendMessage(tileId, title, message, new Date(), MessageFlags.SHOW_DIALOG);
         appendToUI(message + "\n");
+    }
+
+    private void sendAlarmVibration() throws BandIOException{
+        try {
+            // send a vibration request of type alert alarm to the Band
+            client.getNotificationManager().vibrate(VibrationType.NOTIFICATION_ALARM).await();
+        } catch (InterruptedException e) {
+            // handle InterruptedException
+        } catch (BandException e) {
+            // handle BandException
+        }
+    }
+
+    private void sendNoticeVibration() throws BandIOException{
+        try {
+            // send a vibration request of type alert alarm to the Band
+            client.getNotificationManager().vibrate(VibrationType.ONE_TONE_HIGH).await();
+        } catch (InterruptedException e) {
+            // handle InterruptedException
+        } catch (BandException e) {
+            // handle BandException
+        }
     }
 
     private boolean getConnectedBandClient() throws InterruptedException, BandException {

@@ -59,10 +59,13 @@
             android:label="Join game" />
         <activity
             android:name=".CreateOrJoinActivity"
-            android:label="AssasinSpoons" />
+            android:label="AssassinSpoons" />
         <activity
             android:name=".InfoActivity"
             android:label="Information" />
+        <activity
+            android:name=".AssignTargetsActivity"
+            android:label="Assigning Target" />
         <activity
             android:name=".StatisticsActivity"
             android:label="@string/title_activity_statistics"

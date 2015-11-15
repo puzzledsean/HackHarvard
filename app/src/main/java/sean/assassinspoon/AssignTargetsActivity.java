@@ -59,14 +59,19 @@ public class AssignTargetsActivity extends AppCompatActivity {
         });
 
         player.put("playerName", name);
-
         player.saveInBackground();
         try {
            matchMake();
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
-        targetText.setText(getTarget());
+
+        if(getTarget() == null){
+            Log.d("getTarget return null", "null");
+        }
+        else {
+            targetText.setText(getTarget());
+        }
     }
 
     //Match make reads all the playerIds, and matches them with targetIds
@@ -87,9 +92,9 @@ public class AssignTargetsActivity extends AppCompatActivity {
             Log.d("Error:Need more players", " ");
         }
         else if (results.size() > 3) {
-
             for (int i = 0; i < results.size(); i++) {
-                idList[i] = results.get(i).getInt("playerId");
+                Log.d("the thing", "" + results.get(i).fetchIfNeeded().getInt("playerId"));
+                idList[i] = results.get(i).fetchIfNeeded().getInt("playerId");
             }
 
             for (int j = 0; j < idList.length; j++) {
@@ -105,7 +110,7 @@ public class AssignTargetsActivity extends AppCompatActivity {
         }
     }
 
-    public String getTarget() {
+    public String getTarget(){
         return player.getString("targetId");
     }
 }
