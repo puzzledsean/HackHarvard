@@ -67,6 +67,9 @@
             android:name=".AssignTargetsActivity"
             android:label="Assigning Target" />
         <activity
+            android:name=".TargetInfoPageActivity"
+            android:label="Target Information" />
+        <activity
             android:name=".StatisticsActivity"
             android:label="@string/title_activity_statistics"
             android:theme="@style/AppTheme.NoActionBar" >

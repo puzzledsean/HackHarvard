@@ -60,7 +60,7 @@ public class joinGameActivity extends AppCompatActivity{
                             .setAction("Action", null).show();
                 }
                 else {
-                    Intent intent = new Intent(joinGameActivity.this, AssignTargetsActivity.class);
+                    Intent intent = new Intent(joinGameActivity.this, TargetInfoPageActivity.class);
                     intent.putExtra("name", name);
                     //intent.putExtra("listOfPlayers", name);
                     startActivity(intent);
