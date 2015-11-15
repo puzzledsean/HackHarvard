@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Game Name"
+        android:hint="Game name"
         android:ems="10"
         android:id="@+id/joinGame"
         android:layout_marginTop="73dp"
@@ -20,19 +20,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Player Name"
+        android:hint="Player name"
         android:ems="10"
         android:id="@+id/joinName"
         android:layout_below="@+id/joinGame"
         android:layout_centerHorizontal="true" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="65dp"
         android:text="Join"
         android:id="@+id/start_after_join"
         android:layout_below="@+id/joinName"
+        android:layout_marginLeft="-5dip"
+        android:layout_marginRight="-5dip"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

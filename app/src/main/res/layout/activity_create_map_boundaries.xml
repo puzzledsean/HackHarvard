@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:text="Create the map boundaries by hitting the map and creating markers for the four corners. Then, hit Create."
+        android:text="Create the map boundaries by hitting 4 corners of the map. Then, hit Create Map."
         android:id="@+id/instructions"
         android:background="@drawable/rounded_corner"
         android:textColor="#222222"

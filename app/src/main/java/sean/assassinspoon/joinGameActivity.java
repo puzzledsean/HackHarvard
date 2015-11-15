@@ -1,6 +1,8 @@
 package sean.assassinspoon;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,9 @@ public class joinGameActivity extends AppCompatActivity{
         final EditText nameField = (EditText) findViewById(R.id.joinName);
 
         Button startButton = (Button) findViewById(R.id.start_after_join);
+        startButton.setTextColor(Color.parseColor("#ffffff"));
+        startButton.getBackground().setColorFilter(Color.parseColor("#E91E63"), PorterDuff.Mode.MULTIPLY);
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

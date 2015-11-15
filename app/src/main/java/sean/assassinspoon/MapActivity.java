@@ -38,7 +38,6 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private Button btnStart;
     private TextView txtStatus;
 
-    private VibrationNotification mApp;
     private UUID tileId = UUID.fromString("aa0D508F-70A3-47D4-BBA3-812BADB1F8Aa");
 
     public static final String TAG = MapActivity.class.getSimpleName(); // debug Tag
@@ -138,8 +137,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         mMap.setPadding(10, 10, 10, 10);
 
         // Place a static target near user
-        targetPos = new LatLng(42.350292, -71.098425);
-        assassinPos = new LatLng(42.350292, -71.098425);
+        targetPos = new LatLng(42.374603, -71.1188114);
+        assassinPos = new LatLng(42.3770292, -71.112425);
 
         // Initialize the user and target player spots on the map
         userMarker = mMap.addMarker(new MarkerOptions().position(userPos).title("User"));
@@ -202,7 +201,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         double distanceT = distFrom(latU, lngU, latT, lngT);
         double distanceA = distFrom(latU, lngU, latA, lngA);
 
-        if (distanceT <= 150) {
+        if (distanceT <= 350) {
             targetMarker.setVisible(true);
             Log.i(TAG, "latU: " + latU + "lngU: " + lngU);
             Log.i(TAG, "Within Range: " + distanceT);
@@ -212,7 +211,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             Log.i(TAG, "Outside Range: " + distanceT);
         }
 
-        if (distanceA <= 50) {
+        if (distanceA <= 600) {
             notifyUserOfDanger();
         }
     }
@@ -221,7 +220,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         // Add Microsoft Band notifications
         try {
             //sending the actual Thread of execution to sleep X milliseconds
-            Thread.sleep(30000);
+            Thread.sleep(10000);
         } catch(InterruptedException ie) {
 
         }

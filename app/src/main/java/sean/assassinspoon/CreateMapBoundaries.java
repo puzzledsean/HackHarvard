@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -65,17 +66,20 @@ public class CreateMapBoundaries extends FragmentActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
 
         Button createMap = (Button) findViewById(R.id.createMap);
+        createMap.setTextColor(Color.parseColor("#ffffff"));
+        createMap.getBackground().setColorFilter(Color.parseColor("#00579c"), PorterDuff.Mode.MULTIPLY);
+
         createMap.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    updateMapBoundaries();
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(CreateMapBoundaries.this, "Success! Created game: " + name,
-                            Toast.LENGTH_LONG).show();
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateMapBoundaries();
+                        Intent intent = new Intent(view.getContext(), CreateOrJoinActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(CreateMapBoundaries.this, "Success! Created game: " + name,
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
         );
 
         map = mapFragment.getMap();
@@ -147,7 +151,8 @@ public class CreateMapBoundaries extends FragmentActivity implements OnMapReadyC
         // Add a marker to Boston, and move the camera. Google Map's filler code.
         LatLng boston = new LatLng(42.3601, -71.0589);
         // map.addMarker(new MarkerOptions().position(boston).title("Marker in Boston"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(boston));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(boston, 6));
+        map.setMyLocationEnabled(true);
         /*
         if(checkPermission()){
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

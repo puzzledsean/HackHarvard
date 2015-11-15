@@ -18,13 +18,12 @@
         android:typeface="sans"
         android:id="@+id/welcomeText"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="78dp"
         android:textColor="#ffffff"
         android:textStyle="normal"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         txtWelcome = (TextView) findViewById(R.id.welcomeText);
         Typeface proxima = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Light.otf");
         txtWelcome.setTypeface(proxima);
+        txtWelcome.setGravity(Gravity.CENTER);
         txtSub = (TextView) findViewById(R.id.welcomeSub);
         txtSub.setTypeface(proxima);
     }
@@ -222,7 +224,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        appendToUI("Band is connecting...\n");
+        // appendToUI("Band is connecting...\n");
+        appendToUI("Band connected\n");
         return ConnectionState.CONNECTED == client.connect().await();
     }
 }
