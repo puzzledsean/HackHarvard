@@ -14,6 +14,7 @@ import com.parse.ParseQuery;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -45,11 +46,13 @@ public class AssignTargetsActivity extends AppCompatActivity {
         player.put("playerName", name);
 
         player.increment("playerId");
-        int temp = (int) player.get("playerId");
 
         player.saveInBackground();
-
-        matchMake();
+        try {
+           matchMake();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
         getTarget();
     }
 
@@ -57,35 +60,28 @@ public class AssignTargetsActivity extends AppCompatActivity {
     //reads playerIds from Parce
     //adds targetID & targetName into Parce
     //only need to call matchmake once
-    private void matchMake() {
+    private void matchMake() throws com.parse.ParseException {
         //declare query
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Player");
 
-        query.include("playerId");
+        query.selectKeys(Arrays.asList("playerId"));
         //execute query
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> playerParse, com.parse.ParseException e) {
-                for (ParseObject Id : playerParse) {
-                    for (int i = 0; i < playerParse.size(); i++) {
-                        idList[i] = Id.getInt("playerId");
-                    }
-                }
+        List<ParseObject> results = query.find();
 
-                for (int j = 0; j < idList.length; j++) {
-                    final Random rand = new Random();
-                    int temp = rand.nextInt(idList.length) + 1;
-                    player.put("targetId", temp);
-                    targetName = player.getString("playerName");
-                    player.put("targetName", targetName);
-                    Log.d("targetId", " ");
-                }
+        for (int i = 0; i < results.size(); i++) {
+            idList[i] = results.get(i).getInt("playerId");
+        }
 
-                player.saveInBackground();
-            }
+        for (int j = 0; j < idList.length; j++) {
+            final Random rand = new Random();
+            int temp = rand.nextInt(idList.length) + 1;
+            player.put("targetId", temp);
+            targetName = player.getString("playerName");
+            player.put("targetName", targetName);
+            Log.d("targetId", " ");
+        }
 
-
-        });
+        player.saveInBackground();
     }
 
     public String getTarget() {
