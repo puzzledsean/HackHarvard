@@ -38,6 +38,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private Button btnStart;
     private TextView txtStatus;
 
+    private long currentTime = System.currentTimeMillis();
+
     private UUID tileId = UUID.fromString("aa0D508F-70A3-47D4-BBA3-812BADB1F8Aa");
 
     public static final String TAG = MapActivity.class.getSimpleName(); // debug Tag
@@ -201,6 +203,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         double distanceT = distFrom(latU, lngU, latT, lngT);
         double distanceA = distFrom(latU, lngU, latA, lngA);
 
+        long thirtySeconds = System.currentTimeMillis();
+
         if (distanceT <= 350) {
             targetMarker.setVisible(true);
             Log.i(TAG, "latU: " + latU + "lngU: " + lngU);
@@ -211,19 +215,18 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             Log.i(TAG, "Outside Range: " + distanceT);
         }
 
-        if (distanceA <= 600) {
+        if (distanceA <= 530 && (thirtySeconds - currentTime > 25000)) {
             notifyUserOfDanger();
+            Log.i(TAG, "Assassin in range: " + distanceA);
+            currentTime = System.currentTimeMillis();
+        }else{
+            Log.i(TAG, "Assassin outside of range: " + distanceA);
+
         }
     }
 
     private void notifyUserOfDanger() {
         // Add Microsoft Band notifications
-        try {
-            //sending the actual Thread of execution to sleep X milliseconds
-            Thread.sleep(10000);
-        } catch(InterruptedException ie) {
-
-        }
         txtStatus.setText("");
         new appTask("Warning", "Your assassin is near!").execute();
         Log.i(TAG, "Your assassin is nearby!");
