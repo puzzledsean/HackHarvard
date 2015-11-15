@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_statistics"
+    tools:context="sean.assassinspoon.StatisticsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:typeface="sans"
+        android:text="Kills: "
+        android:textSize="20dp"
+        android:id="@+id/kills"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="20dp"
+        android:id="@+id/killNumber"
+        android:layout_alignBottom="@+id/kills"
+        android:layout_toRightOf="@+id/kills"
+        android:layout_toEndOf="@+id/kills" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hours Alive:"
+        android:textSize="20dp"
+        android:id="@+id/hoursAlive"
+        android:layout_below="@+id/kills"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="20dp"
+        android:id="@+id/hoursAliveNumber"
+        android:layout_alignBottom="@+id/hoursAlive"
+        android:layout_toRightOf="@+id/hoursAlive"
+        android:layout_toEndOf="@+id/hoursAlive" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Average Kill Time: "
+        android:textSize="20dp"
+        android:id="@+id/avgKillTime"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/hoursAlive"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="20dp"
+        android:id="@+id/avgKillTimeNumber"
+        android:layout_alignBottom="@+id/avgKillTime"
+        android:layout_toRightOf="@+id/avgKillTime"
+        android:layout_toEndOf="@+id/avgKillTime" />
+
+
+</RelativeLayout>
