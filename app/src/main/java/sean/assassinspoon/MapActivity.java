@@ -1,9 +1,15 @@
 package sean.assassinspoon;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,9 +19,28 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.microsoft.band.BandClient;
+import com.microsoft.band.BandClientManager;
+import com.microsoft.band.BandException;
+import com.microsoft.band.BandIOException;
+import com.microsoft.band.BandInfo;
+import com.microsoft.band.ConnectionState;
+import com.microsoft.band.notifications.MessageFlags;
+import com.microsoft.band.tiles.BandTile;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class MapActivity extends FragmentActivity implements LocationProvider.LocationCallback,
         OnMapReadyCallback {
+    private BandClient client = null;
+    private Button btnStart;
+    private TextView txtStatus;
+
+    private VibrationNotification mApp;
+    private UUID tileId = UUID.fromString("aa0D508F-70A3-47D4-BBA3-812BADB1F8Aa");
+
     public static final String TAG = MapActivity.class.getSimpleName(); // debug Tag
     private int count = 0;
 
@@ -40,6 +65,17 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
                 .build();
         */
         mLocationProvider = new LocationProvider(this, this);
+
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
+        btnStart = (Button) findViewById(R.id.btnStart);
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtStatus.setText("");
+                new appTask("hello", "it's a test message").execute();
+            }
+        });
     }
 
     @Override
@@ -183,11 +219,134 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
 
     private void notifyUserOfDanger() {
         // Add Microsoft Band notifications
+        try {
+            //sending the actual Thread of execution to sleep X milliseconds
+            Thread.sleep(30000);
+        } catch(InterruptedException ie) {
+
+        }
+        txtStatus.setText("");
+        new appTask("Warning", "Your assassin is near!").execute();
         Log.i(TAG, "Your assassin is nearby!");
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // default generated stub
+    }
+
+    public void sendToBand(String title, String message) {
+        new appTask(title, message).execute();
+    }
+
+
+    private class appTask extends AsyncTask<Void, Void, Void> {
+        private String message;
+        private String title;
+
+        public appTask(String title, String message) {
+            this.title = title;
+            this.message = message;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                if (getConnectedBandClient()) {
+                    if (doesTileExist(client.getTileManager().getTiles().await(), tileId)) {
+                        sendMessage(title, message);
+                    } else {
+                        if (addTile()) {
+                            sendMessage("hint", "Send message to new message tile");
+                        }
+                    }
+                } else {
+                    appendToUI("Band isn't connected. Please make sure bluetooth is on and the band is in range.\n");
+                }
+            } catch (BandException e) {
+                String exceptionMessage = "";
+                switch (e.getErrorType()) {
+                    case DEVICE_ERROR:
+                        exceptionMessage = "Please make sure bluetooth is on and the band is in range.";
+                        break;
+                    case UNSUPPORTED_SDK_VERSION_ERROR:
+                        exceptionMessage = "Microsoft Health BandService doesn't support your SDK Version. Please update to latest SDK.";
+                        break;
+                    case SERVICE_ERROR:
+                        exceptionMessage = "Microsoft Health BandService is not available. Please make sure Microsoft Health is installed and that you have the correct permissions.";
+                        break;
+                    case BAND_FULL_ERROR:
+                        exceptionMessage = "Band is full. Please use Microsoft Health to remove a tile.";
+                        break;
+                    default:
+                        exceptionMessage = "Unknown error occured: " + e.getMessage();
+                        break;
+                }
+                appendToUI(exceptionMessage);
+
+            } catch (Exception e) {
+                appendToUI(e.getMessage());
+            }
+            return null;
+        }
+    }
+
+    private void appendToUI(final String string) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                txtStatus.append(string);
+            }
+        });
+    }
+
+    private boolean doesTileExist(List<BandTile> tiles, UUID tileId) {
+        for (BandTile tile : tiles) {
+            if (tile.getTileId().equals(tileId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean addTile() throws Exception {
+        /* Set the options */
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap tileIcon = BitmapFactory.decodeResource(getBaseContext().getResources(), R.raw.tile_icon_large, options);
+        Bitmap badgeIcon = BitmapFactory.decodeResource(getBaseContext().getResources(), R.raw.tile_icon_small, options);
+
+        BandTile tile = new BandTile.Builder(tileId, "MessageTile", tileIcon)
+                .setTileSmallIcon(badgeIcon).build();
+        appendToUI("Message Tile is adding ...\n");
+        if (client.getTileManager().addTile(this, tile).await()) {
+            appendToUI("Message Tile is added.\n");
+            return true;
+        } else {
+            appendToUI("Unable to add message tile to the band.\n");
+            return false;
+        }
+    }
+
+    private void sendMessage(String title, String message) throws BandIOException {
+        client.getNotificationManager().sendMessage(tileId, title, message, new Date(), MessageFlags.SHOW_DIALOG);
+        appendToUI(message + "\n");
+    }
+
+    private boolean getConnectedBandClient() throws InterruptedException, BandException {
+        if (client == null) {
+            BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
+            if (devices.length == 0) {
+                appendToUI("Band isn't paired with your phone.\n");
+                return false;
+            }
+            client = BandClientManager.getInstance().create(getBaseContext(), devices[0]);
+        } else if (ConnectionState.CONNECTED == client.getConnectionState()) {
+            return true;
+        }
+
+        appendToUI("Band is connecting...\n");
+        return ConnectionState.CONNECTED == client.connect().await();
     }
 }
