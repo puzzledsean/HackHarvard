@@ -55,7 +55,9 @@ public class joinGameActivity extends AppCompatActivity{
                             .setAction("Action", null).show();
                 }
                 else {
-                    Intent intent = new Intent(joinGameActivity.this, MapActivity.class);
+                    Intent intent = new Intent(joinGameActivity.this, AssignTargetsActivity.class);
+                    intent.putExtra("name", name);
+                    //intent.putExtra("listOfPlayers", name);
                     startActivity(intent);
                 }
 

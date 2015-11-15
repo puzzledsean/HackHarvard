@@ -1,5 +1,7 @@
 package sean.assassinspoon;
 
+import com.parse.ParseObject;
+
 import java.io.File;
 
 /**
@@ -7,6 +9,7 @@ import java.io.File;
  */
 public class Player {
 
+    public ParseObject player = new ParseObject("Player");
     private int playerId, targetId, longitude, latitude;
     private String playerName, targetName;
     private File playerPicture;
@@ -40,7 +43,7 @@ public class Player {
     }
 
     public String getTargetName() {
-        return targetName;
+        return player.getString("targetName");
     }
 
     public File getPlayerPicture() {
