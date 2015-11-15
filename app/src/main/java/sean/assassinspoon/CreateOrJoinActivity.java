@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,7 +57,7 @@ public class CreateOrJoinActivity extends Activity {
         });
 
         FloatingActionButton map = (FloatingActionButton) findViewById(R.id.mapBtn);
-        map.setImageDrawable(getDrawable(R.drawable.common_signin_btn_icon_dark));
+        map.setImageDrawable(getDrawable(R.drawable.ic_map_white_24dp));
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,5 +89,24 @@ public class CreateOrJoinActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        FloatingActionButton stat = (FloatingActionButton) findViewById(R.id.statBtn);
+        stat.setImageDrawable(getDrawable(R.drawable.ic_face_white_24dp));
+
+        stat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), StatisticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView createText = (TextView) findViewById(R.id.createText);
+        TextView joinText = (TextView) findViewById(R.id.joinText);
+        TextView instructionText = (TextView) findViewById(R.id.instructionText);
+        Typeface proxima = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Light.otf");
+        createText.setTypeface(proxima);
+        joinText.setTypeface(proxima);
+        instructionText.setTypeface(proxima);
     }
 }
