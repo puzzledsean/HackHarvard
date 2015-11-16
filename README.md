@@ -2,7 +2,9 @@
 
 Assassin Spoons is an Android app with the Microsoft Band to complement your Assassins game!
 
-### In action (Click the image to watch our promo video!)
+### In action
+Click the image to watch our promo video!
+
 [![Assassin Spoons](http://img.youtube.com/vi/-9zjycib6Es/maxresdefault.jpg)](https://www.youtube.com/watch?v=-9zjycib6Es "Assassin Spoons")
 
 ### How it works
@@ -15,5 +17,4 @@ You yourself are also being hunted! Check the Android app or check the Microsoft
 ![Google Play](https://github.com/puzzledsean/HackHarvard/blob/master/img/google_play.jpg?raw=true "Coming to Google Play")
 
 ### Links
-
 [Devpost](http://devpost.com/software/assassinspoons)
