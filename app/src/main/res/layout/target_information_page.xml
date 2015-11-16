@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#2c7da5"
-    tools:context=".TargetInfoPageActivity">
+    tools:context=".AssignTargetsActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +36,8 @@
         android:minWidth="200dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:src="@drawable/profileplaceholder" />
 
     <Button
         android:layout_width="wrap_content"
@@ -49,8 +50,8 @@
         android:maxWidth="240dp"
         android:minWidth="240dp"
         android:textSize="24dp"
-        android:background="#e63a3a"
-        android:backgroundTint="#7f0000"
+        android:background="#ff4649"
+        android:backgroundTint="#d63a3d"
         android:textColor="#fdfdfd"
         android:textStyle="bold"
         android:layout_below="@+id/targetImage"
@@ -61,7 +62,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/targetName"
         android:layout_above="@+id/targetImage"
         android:layout_centerHorizontal="true"
@@ -74,5 +74,15 @@
         android:textStyle="bold"
         android:textColor="#7f0000"
         android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To Map"
+        android:id="@+id/toMapButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
 </RelativeLayout>

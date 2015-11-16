@@ -1,9 +1,14 @@
 package sean.assassinspoon;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -24,7 +29,7 @@ import org.json.JSONArray;
 /**
  * Created by Andy Shen on 11/14/2015.
  */
-public class AssignTargetsActivity extends AppCompatActivity {
+public class AssignTargetsActivity extends Activity {
 
     //private String player;
     public ParseObject player = new ParseObject("Player");
@@ -35,10 +40,7 @@ public class AssignTargetsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.selecting_target);
-
-        final TextView targetText = (TextView) findViewById(R.id.targetName);
-
+        //setContentView(R.layout.target_information_page);
 
         Intent myIntent = getIntent();
         name = myIntent.getStringExtra("name");
@@ -60,25 +62,25 @@ public class AssignTargetsActivity extends AppCompatActivity {
 
         player.put("playerName", name);
         player.saveInBackground();
+
+
         try {
            matchMake();
+            targetName = matchMake();
+            if (matchMake() != null){
+                changePage(targetName);
+            }
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
 
-        if(getTarget() == null){
-            Log.d("getTarget return null", "null");
-        }
-        else {
-            targetText.setText(getTarget());
-        }
     }
 
     //Match make reads all the playerIds, and matches them with targetIds
     //reads playerIds from Parce
     //adds targetID & targetName into Parce
     //only need to call matchmake once
-    private void matchMake() throws com.parse.ParseException {
+    private String matchMake() throws com.parse.ParseException {
         //declare query
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Player");
 
@@ -105,12 +107,19 @@ public class AssignTargetsActivity extends AppCompatActivity {
                 player.put("targetName", targetName);
                 Log.d("targetId", " ");
             }
-
             player.saveInBackground();
+            Random rand = new Random();
+            int pp = rand.nextInt(results.size());
+            return results.get(pp).getString("targetName");
         }
+        return null;
     }
 
-    public String getTarget(){
-        return player.getString("targetId");
+    public void changePage(String targetName) {
+        targetName = this.targetName;
+        Intent intent = new Intent(AssignTargetsActivity.this, TargetInfoPageActivity.class);
+        intent.putExtra("name", targetName);
+        startActivity(intent);
     }
+
 }

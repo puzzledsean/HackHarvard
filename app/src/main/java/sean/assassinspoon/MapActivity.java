@@ -1,5 +1,6 @@
 package sean.assassinspoon;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -31,12 +32,15 @@ import com.microsoft.band.tiles.BandTile;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class MapActivity extends FragmentActivity implements LocationProvider.LocationCallback,
         OnMapReadyCallback {
     private BandClient client = null;
     private Button btnStart;
+    private Button btnToMenu;
+    private Button btnToTarget;
     private TextView txtStatus;
 
     private long currentTime = System.currentTimeMillis();
@@ -49,7 +53,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationProvider mLocationProvider;
 
-    private Marker userMarker, targetMarker;
+    private Marker userMarker, targetMarker, assassinMarker;
     private LatLng userPos, targetPos, assassinPos;
 
     @Override
@@ -70,6 +74,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
 
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         btnStart = (Button) findViewById(R.id.btnStart);
+        btnToMenu = (Button) findViewById((R.id.toMenu));
+        btnToTarget = (Button) findViewById(R.id.toTarget);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +84,23 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
                 new appTask("hello", "it's a test message").execute();
             }
         });
+        btnToMenu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MapActivity.this, CreateOrJoinActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnToTarget.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MapActivity.this, TargetInfoPageActivity.class);
+                startActivity(intent);
+            }
+
+
+        });
+
     }
 
     @Override
@@ -140,7 +163,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         mMap.setPadding(10, 10, 10, 10);
 
         // Place a static target near user
-        targetPos = new LatLng(42.374603, -71.1188114);
+        targetPos = new LatLng(42.37770, -71.1157277);
         assassinPos = new LatLng(42.3770292, -71.112425);
 
         // Initialize the user and target player spots on the map
@@ -150,7 +173,11 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         targetMarker = mMap.addMarker(new MarkerOptions().position(targetPos).title("Target"));
         setMarkerColor(targetMarker, BitmapDescriptorFactory.HUE_BLUE);
 
-        targetMarker.setVisible(false); // target is invisible at the beginning of the game
+        assassinMarker = mMap.addMarker(new MarkerOptions().position(assassinPos).title("Assassin"));
+        setMarkerColor(targetMarker, BitmapDescriptorFactory.HUE_YELLOW);
+
+        targetMarker.setVisible(true); // target is invisible at the beginning of the game
+        assassinMarker.setVisible(false); // target is invisible at the beginning of the game
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
     }
@@ -166,7 +193,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             mMap.moveCamera(CameraUpdateFactory.newLatLng(userPos));
         }
         Log.i(TAG, "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
-        userMarker.setTitle(count + "latitude: " + userPos.latitude + "longitude: " + userPos.longitude);
+        userMarker.setTitle(count + " latitude: " + userPos.latitude + " longitude: " + userPos.longitude);
         ++count;
 
         update(targetPos, assassinPos, userPos);
@@ -206,24 +233,25 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
 
         long thirtySeconds = System.currentTimeMillis();
 
-        if (distanceT <= 350 && (thirtySeconds - currentTime > 60000)) {
+        if (distanceT <= 800 && (thirtySeconds - currentTime > 20000)) {
             targetAlerted();
-            targetMarker.setVisible(true);
+            // targetMarker.setVisible(true);
             Log.i(TAG, "latU: " + latU + "lngU: " + lngU);
             Log.i(TAG, "Within Range: " + distanceT);
         }
         else {
-            targetMarker.setVisible(false);
+            // targetMarker.setVisible(false);
             Log.i(TAG, "Outside Range: " + distanceT);
         }
 
-        if (distanceA <= 530 && (thirtySeconds - currentTime > 25000)) {
+        if (distanceA <= 1000 && (thirtySeconds - currentTime > 15000)) {
             notifyUserOfDanger();
+            assassinMarker.setVisible(true);
             Log.i(TAG, "Assassin in range: " + distanceA);
             currentTime = System.currentTimeMillis();
         }else{
+            assassinMarker.setVisible(false);
             Log.i(TAG, "Assassin outside of range: " + distanceA);
-
         }
     }
 
@@ -384,7 +412,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
             return true;
         }
 
-        appendToUI("Band is connecting...\n");
+        // appendToUI("Band is connecting...\n");
         return ConnectionState.CONNECTED == client.connect().await();
     }
 }
