@@ -14,6 +14,7 @@ You yourself are also being hunted! Check the Android app or check the Microsoft
 
 ### Images
 ![Microsoft Band](https://github.com/puzzledsean/HackHarvard/blob/master/img/band.jpg?raw=true "Assassin is near")
+
 ![Google Play](https://github.com/puzzledsean/HackHarvard/blob/master/img/google_play.jpg?raw=true "Coming to Google Play")
 
 ### Links
