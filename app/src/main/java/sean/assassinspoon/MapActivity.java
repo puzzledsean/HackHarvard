@@ -163,8 +163,8 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         mMap.setPadding(10, 10, 10, 10);
 
         // Place a static target near user
-        targetPos = new LatLng(42.37770, -71.1157277);
-        assassinPos = new LatLng(42.3770292, -71.112425);
+        targetPos = new LatLng(42.351220, -71.109819);
+        assassinPos = new LatLng(42.351026, -71.107995);
 
         // Initialize the user and target player spots on the map
         userMarker = mMap.addMarker(new MarkerOptions().position(userPos).title("User"));
