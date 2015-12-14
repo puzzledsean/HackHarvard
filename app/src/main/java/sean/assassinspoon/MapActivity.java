@@ -3,6 +3,8 @@ package sean.assassinspoon;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -74,8 +76,16 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
 
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         btnStart = (Button) findViewById(R.id.btnStart);
+        btnStart.setTextColor(Color.parseColor("#ffffff"));
+        btnStart.getBackground().setColorFilter(Color.parseColor("#00579c"), PorterDuff.Mode.MULTIPLY);
+
         btnToMenu = (Button) findViewById((R.id.toMenu));
+        btnToMenu.setTextColor(Color.parseColor("#ffffff"));
+        btnToMenu.getBackground().setColorFilter(Color.parseColor("#ff913d"), PorterDuff.Mode.MULTIPLY);
+
         btnToTarget = (Button) findViewById(R.id.toTarget);
+        btnToTarget.setTextColor(Color.parseColor("#ffffff"));
+        btnToTarget.getBackground().setColorFilter(Color.parseColor("#E31B78"), PorterDuff.Mode.MULTIPLY);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
