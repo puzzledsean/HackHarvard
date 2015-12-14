@@ -48,7 +48,7 @@ public class StatisticsActivity extends AppCompatActivity {
         txtKills.setText(String.valueOf(numOfKills));
 
         txtTimeAlive = (TextView) findViewById(R.id.hoursAliveNumber);
-        txtTimeAlive.setText(String.valueOf(timeAlive + " hrs."));
+        txtTimeAlive.setText(" " + String.valueOf(timeAlive + " hrs."));
 
         // Find mean time between kills
         inputString = Arrays.toString(timesBetweenKills);

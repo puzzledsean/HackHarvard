@@ -184,7 +184,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
         setMarkerColor(targetMarker, BitmapDescriptorFactory.HUE_BLUE);
 
         assassinMarker = mMap.addMarker(new MarkerOptions().position(assassinPos).title("Assassin"));
-        setMarkerColor(targetMarker, BitmapDescriptorFactory.HUE_YELLOW);
+        setMarkerColor(assassinMarker, BitmapDescriptorFactory.HUE_YELLOW);
 
         targetMarker.setVisible(true); // target is invisible at the beginning of the game
         assassinMarker.setVisible(false); // target is invisible at the beginning of the game

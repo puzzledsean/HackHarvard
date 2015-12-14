@@ -1,6 +1,8 @@
 package sean.assassinspoon;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ public class TargetInfoPageActivity extends AppCompatActivity{
         targetName = myIntent.getStringExtra("name");
 
         Button myButton = (Button) findViewById(R.id.toMapButton);
+        myButton.setTextColor(Color.parseColor("#ffffff"));
+        myButton.getBackground().setColorFilter(Color.parseColor("#E31B78"), PorterDuff.Mode.MULTIPLY);
 
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
