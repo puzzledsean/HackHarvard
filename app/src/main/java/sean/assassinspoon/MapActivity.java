@@ -157,7 +157,7 @@ public class MapActivity extends FragmentActivity implements LocationProvider.Lo
     private void setUpMap() {
         // Add a marker in current position, and move the camera.
 
-        double userLat = 0, userLng = 0;
+        double userLat = 42.350868, userLng = -71.109064;
         LatLng userPos = new LatLng(userLat, userLng);
 
         mMap.setPadding(10, 10, 10, 10);
