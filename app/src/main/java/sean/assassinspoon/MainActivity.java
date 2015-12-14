@@ -63,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
         btnConsent.setImageDrawable(getDrawable(R.drawable.ic_watch_white_24dp));
 
         temp = (FloatingActionButton) findViewById(R.id.toNext);
-        temp.setVisibility(View.GONE);
+        temp.setImageDrawable(getDrawable(R.drawable.ic_arrow_forward_white_24dp));
+        temp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateOrJoinActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnConsent.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("unchecked")
@@ -166,15 +173,7 @@ public class MainActivity extends AppCompatActivity {
                         client.getSensorManager().requestHeartRateConsent(params[0].get(), new HeartRateConsentListener() {
                             @Override
                             public void userAccepted(boolean consentGiven) {
-                                temp.setVisibility(View.VISIBLE);
-                                temp.setImageDrawable(getDrawable(R.drawable.ic_arrow_forward_white_24dp));
-                                temp.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(MainActivity.this, CreateOrJoinActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
+
                             }
                         });
                     }

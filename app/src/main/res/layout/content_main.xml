@@ -44,7 +44,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/welcomeText"
+        android:layout_alignStart="@+id/welcomeText"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp" />
     <TextView
         android:id="@+id/txtStatus"
         android:layout_width="match_parent"
@@ -64,9 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:backgroundTint="#ff913d"
-        android:layout_above="@+id/txtStatus"
-        android:layout_alignLeft="@+id/connectBtn"
-        android:layout_alignStart="@+id/connectBtn" />
+        android:layout_alignTop="@+id/connectBtn"
+        android:layout_toRightOf="@+id/connectBtn"
+        android:layout_toEndOf="@+id/connectBtn"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp" />
 
 </RelativeLayout>
 
